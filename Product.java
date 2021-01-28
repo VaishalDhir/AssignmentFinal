@@ -1,6 +1,7 @@
-package com.AssignmentFinal.server;
+package com.AssignmentFinall.server;
 import java.sql.Date;
 public class Product {
+
 	private String PRODUCT_CD; 
 	private String DATE_OFFERED;
 	private String DATE_RETIRED;
@@ -45,4 +46,5 @@ public class Product {
 		return "Product [Product CD Type=" + PRODUCT_CD + ", Date Offered=" + DATE_OFFERED + ", Date Retired=" + DATE_RETIRED
 				+ ", Name =" + NAME + ",Product type CD=\" + PRODUCT_TYPE_CD + \"]\n";
 	}
+
 }
