@@ -1,7 +1,7 @@
-package com.AssignmentFinal.server;
+package com.AssignmentFinall.server;
 import java.sql.Date;
-
 public class Officer {
+
 	private String OFFICER_ID; 
 	private String END_DATE;
 	private String FIRST_NAME;
@@ -57,4 +57,5 @@ public class Officer {
 		return "Officer [Officer ID=" + OFFICER_ID + ", End_date=" + END_DATE + ", FirstName=" + FIRST_NAME
 				+ ", LastName=\" + LAST_NAME + \", Start Date=\" + START_DATE + \", Title=\" + TITLE + \", Customer id =" + CUST_ID + "]\n";
 	}
+
 }

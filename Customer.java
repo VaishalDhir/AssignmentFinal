@@ -1,6 +1,7 @@
-package com.AssignmentFinal.server;
+package com.AssignmentFinall.server;
 import java.sql.Date;
 public class Customer {
+
 	private int CUST_ID;
 	private String ADDRESS; 
 	private String CITY;
@@ -56,4 +57,5 @@ public class Customer {
 		return "Customer [Customer id =\" + CUST_ID + \", Address=" + ADDRESS + ", City=" + CITY
 				+ ", Customer type cd =" + CUST_TYPE_CD + ", Fed_ID=\" + FED_ID + \", Postal_Code=\" + POSTAL_CODE + \", State=\" + STATE + \"]\n";
 	}
+
 }
