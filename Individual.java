@@ -1,9 +1,7 @@
-package com.AssignmentFinal.server;
-
+package com.AssignmentFinall.server;
 import java.sql.Date;
-
 public class Individual {
-	
+
 	private String BIRTH_DATE; 
 	private String FIRST_NAME;
 	private String LAST_NAME;
@@ -39,5 +37,4 @@ public class Individual {
 		return "Individual [Birth Date=" + BIRTH_DATE + ", FirstName=" + FIRST_NAME + ", LastName=" + LAST_NAME
 				+ ", Customer id =" + CUST_ID + "]\n";
 	}
-		
 }

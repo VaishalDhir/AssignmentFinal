@@ -1,4 +1,4 @@
-package com.AssignmentFinal.server;
+package com.AssignmentFinall.server;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,6 +26,10 @@ import javax.ws.rs.core.Response.Status;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.AssignmentFinall.server.Bussiness;
+import com.AssignmentFinall.server.ConnectToSql;
+import com.AssignmentFinall.server.Department;
 
 @Path("/aws")
 public class Awsexample {
@@ -556,5 +560,217 @@ public class Awsexample {
 			
 			
 		}
+		//Department Select
+		
+		
+				@GET
+				@Path("/getDep")
+				@Produces(MediaType.APPLICATION_JSON)
+				public Response getDepartment() {
+					ConnectToSql connection = new ConnectToSql();
+
+					con = connection.getConnection();
+
+					try {
+						stmt = con.createStatement();
+
+						rs = stmt.executeQuery("Select * from department");
+
+						while (rs.next()) {
+							childObj = new JSONObject();
+
+							childObj.accumulate("Department ID", rs.getString("DEPT_ID"));
+							childObj.accumulate("Name", rs.getString("NAME"));
+							jsonArray.put(childObj);
+						}
+
+						mainObj.put("Department", jsonArray);
+					} catch (SQLException e) {
+						System.out.println("SQL Exception : " + e.getMessage());
+					} finally {
+						try {
+							con.close();
+							stmt.close();
+							rs.close();
+						} catch (SQLException e) {
+							System.out.println("Finally Block SQL Exception : " + e.getMessage());
+						}
+					}
+
+					return Response.status(200).entity(mainObj.toString()).build();
+
+				}
+				// Insert Department
+				
+				@POST
+				@Path("/createDep")
+				@Consumes(MediaType.APPLICATION_JSON)
+				@Produces(MediaType.APPLICATION_JSON)
+				public Response createDepartment(Department department) {
+					
+					ConnectToSql connection = new ConnectToSql();
+					con = connection.getConnection();
+					
+					
+					try {
+						String query = "INSERT INTO `midterm`.`department` (`DEPT_ID` ,`Name`) VALUES(?,?);";
+					
+						preparedStatement = con.prepareStatement(query);
+
+						preparedStatement.setInt(1, department.getDEPT_ID());
+						preparedStatement.setString(2, department.getNAME());
+						
+					
+					System.out.println("asasasasasasasasas :"+preparedStatement);
+						int rowCount = preparedStatement.executeUpdate();
+					
+						if(rowCount>0) {
+							System.out.println("Record inserted Successfully! : "+rowCount);
+							
+							mainObj.accumulate("Status", 201);
+							mainObj.accumulate("Message", "Record Successfully added!");
+						} else {
+							mainObj.accumulate("Status", 500);
+							mainObj.accumulate("Message", "Something went wrong!");
+						}
+					} catch (SQLException e) {
+
+						mainObj.accumulate("Status", 500);
+						mainObj.accumulate("Message", e.getMessage());
+					} finally {
+						try {
+							preparedStatement.close();
+							con.close();
+						}catch (SQLException e) {
+							System.out.println("Finally SQL Exception : "+e.getMessage());
+						}
+				}
+				
+				
+				return Response.status(201).entity(mainObj.toString()).build();
+				
+					
+					
+				}
+				
+				//Department Delete
+				@DELETE
+				@Path("/deleteDep/{id}")
+				@Consumes(MediaType.APPLICATION_JSON)
+				@Produces(MediaType.APPLICATION_JSON)
+				public Response deleteDepartment(@PathParam("id") int id,Department department) {
+					
+					ConnectToSql connection = new ConnectToSql();
+					con = connection.getConnection();
+					
+					
+					try {
+						String query= "DELETE FROM  `midterm`.`department` WHERE DEPT_ID="+id+";";
+								
+					
+						preparedStatement = con.prepareStatement(query);
+						preparedStatement.executeUpdate();
+					
+						
+					} catch (SQLException e) {
+
+						mainObj.accumulate("Status", 500);
+						mainObj.accumulate("Message", e.getMessage());
+					} finally {
+						try {
+							preparedStatement.close();
+							con.close();
+						}catch (SQLException e) {
+							System.out.println("Finally SQL Exception : "+e.getMessage());
+						}
+				}
+				
+				
+				return Response.status(201).entity(mainObj.toString()).build();
+				
+					
+					
+				}
+				//Bussiness Select
+				
+				@GET
+				@Path("/getBuss")
+				@Produces(MediaType.APPLICATION_JSON)
+				public Response getBussiness() {
+					ConnectToSql connection = new ConnectToSql();
+
+					con = connection.getConnection();
+
+					try {
+						stmt = con.createStatement();
+
+						rs = stmt.executeQuery("Select * from business");
+
+						while (rs.next()) {
+							childObj = new JSONObject();
+
+							childObj.accumulate("Incorp Date", rs.getString("INCORP_DATE"));
+							childObj.accumulate("Name", rs.getString("NAME"));
+							childObj.accumulate("State ID", rs.getString("STATE_ID"));
+							childObj.accumulate("Customer Id", rs.getString("CUST_ID"));
+							jsonArray.put(childObj);
+						}
+
+						mainObj.put("Department", jsonArray);
+					} catch (SQLException e) {
+						System.out.println("SQL Exception : " + e.getMessage());
+					} finally {
+						try {
+							con.close();
+							stmt.close();
+							rs.close();
+						} catch (SQLException e) {
+							System.out.println("Finally Block SQL Exception : " + e.getMessage());
+						}
+					}
+
+					return Response.status(200).entity(mainObj.toString()).build();
+
+				}
+				
+				// Delete Bussiness
+				
+				@DELETE
+				@Path("/deleteBuss/{id}")
+				@Consumes(MediaType.APPLICATION_JSON)
+				@Produces(MediaType.APPLICATION_JSON)
+				public Response deleteBussiness(@PathParam("id") int id,Bussiness business) {
+					
+					ConnectToSql connection = new ConnectToSql();
+					con = connection.getConnection();
+					
+					
+					try {
+						String query= "DELETE FROM  `midterm`.`business` WHERE CUST_ID="+id+";";
+						
+						preparedStatement = con.prepareStatement(query);
+						preparedStatement.executeUpdate();
+					
+						
+					} catch (SQLException e) {
+
+						mainObj.accumulate("Status", 500);
+						mainObj.accumulate("Message", e.getMessage());
+					} finally {
+						try {
+							preparedStatement.close();
+							con.close();
+						}catch (SQLException e) {
+							System.out.println("Finally SQL Exception : "+e.getMessage());
+						}
+				}
+				
+				
+				return Response.status(201).entity(mainObj.toString()).build();
+				
+					
+					
+				}
 	
 }
+
