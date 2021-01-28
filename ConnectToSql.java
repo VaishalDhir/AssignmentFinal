@@ -1,11 +1,11 @@
-package com.AssignmentFinal.server;
+package com.AssignmentFinall.server;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectToSql {
-	
+
 	private String  databaseName = "midterm";
 	private String  databaseuserName = "admin";
 	private String  databasePass = "Vaishal123";
@@ -38,5 +38,4 @@ public class ConnectToSql {
 		
 		return con;
 	}
-
 }
